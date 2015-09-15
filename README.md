@@ -14,5 +14,6 @@ Manage code deployment and dependencies
 - `code::symlink_storage` Move the storage directory into a shared directory so that it can be used by each release
 
 Add the following to the *Deploy* lifecycle for a full deployment/installation process:
+
 `code::deploy` `code::mount` `code::install_dependencies` `code::symlink_storage`
 
