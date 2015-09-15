@@ -6,6 +6,7 @@ version     "1.0.0"
 
 depends "deploy"
 depends "composer"
+depends "opsworks_ecs"
 
 recipe "code::deploy", "Deploy a version of the code"
 recipe "code::mount", "A workaround for Docker running a symlink directory"
