@@ -1,3 +1,5 @@
-normal[:deploy][:user] = 'ec2-user'
-normal[:deploy][:group] = 'ec2-user'
-normal[:deploy][:deploy_to] = '/home/ec2-user/code'
+node[:deploy].each do |application, deploy|
+    normal[:deploy][application][:user] = 'ec2-user'
+    normal[:deploy][application][:group] = 'ec2-user'
+    normal[:deploy][application][:deploy_to] = '/home/ec2-user/code'
+end
