@@ -1,4 +1,3 @@
-code = {}
-code[:user] = 'ec2-user'
-code[:group] = 'ec2-user'
-code[:location] = '/home/ec2-user/code'
+normal[:deploy][:user] = 'ec2-user'
+noraml[:deploy][:group] = 'ec2-user'
+normal[:deploy][:deploy_to] = '/home/ec2-user/code'
