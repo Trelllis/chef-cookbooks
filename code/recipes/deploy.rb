@@ -30,6 +30,6 @@ node[:deploy].each do |application, deploy|
         group deploy[:group]
         reference deploy[:scm][:revision]
         ssh_wrapper "/tmp/git_wrapper.sh"
-        action deploy[:action]
+        action :sync
     end
 end
