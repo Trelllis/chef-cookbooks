@@ -1,5 +1,5 @@
 node[:deploy].each do |application, deploy|
-  template "#{deploy[:deploy_to]}/current/.env" do
+  template "#{deploy[:deploy_to]}/.env" do
     source ".env.erb"
     mode 0755
     owner deploy[:user]
@@ -9,6 +9,6 @@ node[:deploy].each do |application, deploy|
       variables: (deploy[:environment_variables] rescue {}),
     )
 
-    only_if { ::File.directory?("#{deploy[:deploy_to]}/current") }
+    only_if { ::File.directory?("#{deploy[:deploy_to]}") }
   end
 end
