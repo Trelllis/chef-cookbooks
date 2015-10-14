@@ -9,7 +9,7 @@ node[:deploy].each do |application, deploy|
     end
 
     # Create id_rsa file - Git SSH Key
-   file "/tmp/id_rsa" do
+    file "/tmp/id_rsa" do
         owner deploy[:user]
         mode "0400"
         content deploy[:scm][:ssh_key]
@@ -19,18 +19,19 @@ node[:deploy].each do |application, deploy|
     file "/tmp/git_wrapper.sh" do
         owner deploy[:user]
         mode "0755"
-        content "#!/bin/sh\nexec /usr/bin/ssh -i /tmp/id_rsa \"$@\""
+        content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
 
     # Deploy code
-    deploy deploy[:deploy_to] do
+    git "deploy #{application}" do
+        destination deploy[:deploy_to]
         keep_releases deploy[:keep_releases]
         repository deploy[:scm][:repository]
         user deploy[:user]
         group deploy[:group]
-        revision deploy[:scm][:revision]
+        reference deploy[:scm][:revision]
         environment deploy[:environment].to_hash
-        action deploy[:action]
         ssh_wrapper "/tmp/git_wrapper.sh"
+        action deploy[:action]
     end
 end
