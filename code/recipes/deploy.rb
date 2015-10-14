@@ -25,12 +25,10 @@ node[:deploy].each do |application, deploy|
     # Deploy code
     git "deploy #{application}" do
         destination deploy[:deploy_to]
-        keep_releases deploy[:keep_releases]
         repository deploy[:scm][:repository]
         user deploy[:user]
         group deploy[:group]
         reference deploy[:scm][:revision]
-        environment deploy[:environment].to_hash
         ssh_wrapper "/tmp/git_wrapper.sh"
         action deploy[:action]
     end
