@@ -2,11 +2,11 @@ include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
     # Setup deployment directory
-    opsworks_deploy_dir do
-        user deploy[:user]
-        group deploy[:group]
-        path deploy[:deploy_to]
-    end
+    # opsworks_deploy_dir do
+    #     user deploy[:user]
+    #     group deploy[:group]
+    #     path deploy[:deploy_to]
+    # end
 
     # Create id_rsa file - Git SSH Key
     file "/tmp/id_rsa" do
@@ -28,7 +28,7 @@ node[:deploy].each do |application, deploy|
         repository deploy[:scm][:repository]
         user deploy[:user]
         group deploy[:group]
-        reference deploy[:scm][:revision]
+        revision deploy[:scm][:revision]
         ssh_wrapper "/tmp/git_wrapper.sh"
         action :sync
     end
