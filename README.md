@@ -10,11 +10,21 @@ Manage code deployment and dependencies
 
 - `code::setup` Install dependencies (composer)
 - `code::deploy` Deploy a version of the code
-- `code::mount` A workaround for Docker to mount a symlink directory
+- `code::mount` A workaround for Docker to mount OpsWorks deploy directory `/srv/www` for it being a symlink directory
 - `code::install_dependencies` Run composer install inside the project directory
-- `code::symlink_storage` Move the storage directory into a shared directory so that it can be used by each release
+- `code::permissions` Fix permissions for your project. i.e. for Laravel projects the `storage/` directory's mode must be 0755
 
-Add the following to the *Deploy* lifecycle for a full deployment/installation process:
+Add the following to the *Deploy* lifecycle for a full revision deployment process:
 
-`code::setup` `code::deploy` `code::install_dependencies` `code::symlink_storage`
+**Setup**
+- `code::setup`
+
+**Deploy**
+- `code::deploy`
+- `code::install_dependencies`
+- `code::permissions`
+
+> IMPORTANT!
+In the case of Laravel, add `code::env` to the end of the deploy lifecycle to have
+a .env file generated out of the environment variables passed in from the App in OpsWorks.
 
