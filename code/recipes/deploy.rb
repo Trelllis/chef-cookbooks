@@ -8,6 +8,13 @@ node[:deploy].each do |application, deploy|
     #     path deploy[:deploy_to]
     # end
 
+    directory deploy[:deploy_to] do
+        owner deploy[:user]
+        group deploy[:group]
+        mode '0755'
+        action :create
+    end
+
     # Create id_rsa file - Git SSH Key
     file "/tmp/id_rsa" do
         owner deploy[:user]
