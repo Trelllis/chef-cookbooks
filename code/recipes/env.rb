@@ -1,7 +1,7 @@
 node[:deploy].each do |application, deploy|
   template "#{deploy[:deploy_to]}/.env" do
     source ".env.erb"
-    mode 0755
+    mode 0444
     owner deploy[:user]
     group deploy[:group]
 
