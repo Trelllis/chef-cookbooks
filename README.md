@@ -49,11 +49,11 @@ Overrides the HAProxy template so that it replaces the built-in with more dynami
                 ],
                 "use_backends": [
                     {
-                        "backend": "najem",
+                        "title": "najem",
                         "when": "is_najem"
                     },
                     {
-                        "backend": "api",
+                        "title": "api",
                         "when": "is_api"
                     }
                 ]

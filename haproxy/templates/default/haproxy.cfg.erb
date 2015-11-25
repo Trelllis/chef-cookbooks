@@ -46,6 +46,10 @@ frontend <%= frontend['title'] %> <%= frontend['address'] %>
     <% frontend['acls'].each do |acl| %>
     acl <%= acl %>
     <% end %>
+
+    <% frontend['use_backends'].each do |backend| %>
+    use_backend <%= backend['title'] %> if <%= backend['when'] %>
+    <% end %>
 <% end %>
 <% else %>
 listen application 0.0.0.0:80
