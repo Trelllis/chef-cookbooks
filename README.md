@@ -4,7 +4,7 @@ To be used with OpsWorks
 ### Cookbooks
 
 #### code
-Manage code deployment and dependencies
+Manage code deployment and dependencies.
 
 **Recipes**
 
@@ -28,3 +28,51 @@ Add the following to the *Deploy* lifecycle for a full revision deployment proce
 In the case of Laravel, add `code::env` to the end of the deploy lifecycle to have
 a .env file generated out of the environment variables passed in from the App in OpsWorks.
 
+### Templates
+
+#### HAProxy
+Overrides the HAProxy template so that it replaces the built-in with more dynamic properties, can be configured as such:
+
+```json
+{
+    "haproxy": {
+        "default_backend": "najem",
+        "frontends": [
+            {
+                "title": "main",
+                "address": "*:80",
+                "acls": [
+                   "is_najem hdr_dom(host) -i najem.com",
+                   "is_najem hdr_dom(host) -i www.najem.com",
+
+                   "is_api hdr_dom(host) -i api.najem.com"
+                ],
+                "use_backends": [
+                    {
+                        "backend": "najem",
+                        "when": "is_najem"
+                    },
+                    {
+                        "backend": "api",
+                        "when": "is_api"
+                    }
+                ]
+            }
+        ],
+        "backends": [
+            {
+                "title": "najem",
+                "servers": [
+                    "server najem-web-I 172.31.41.133:80 check inter 5000 fastinter 1000 fall 1 weight 1"
+                ]
+            },
+            {
+                "title": "api",
+                "servers": [
+                    "server api-web-I 172.31.41.133:80 check inter 5000 fastinter 1000 fall 1 weight 1"
+                ]
+            }
+        ]
+    }
+}
+```
