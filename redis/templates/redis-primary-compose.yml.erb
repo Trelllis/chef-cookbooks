@@ -1,0 +1,8 @@
+redis-<%= store[:title] %>-primary:
+    image: trelllis/redis:primary
+    volumes:
+        - /home/ec2-user/redis/data:/data
+    expose:
+        - 6379
+    ports:
+        - <%= store[:port] %>:6379
