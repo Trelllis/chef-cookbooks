@@ -39,18 +39,31 @@ defaults
     stats uri <%= node[:haproxy][:stats_url] %>
     <% end -%>
 
-frontend main *:80
-    acl is_najem hdr_dom(host) -i najem.com
-    acl is_najem hdr_dom(host) -i www.najem.com
-    use_backend najem if is_najem
+<% if !node[:haproxy][:frontends].blank? %>
 
-    acl is_api hdr_dom(host) -i api.najem.com
-    use_backend api if is_api
+<% node[:haproxy][:frontends].each do |frontend| %>
+frontend <%= frontend['title'] %> <%= frontend['address'] %>
+    <% frontend['acls'].each do |acl| %>
+    acl <%= acl %>
+    <% end %>
+<% end %>
+<% else %>
+listen application 0.0.0.0:80
+  # configure a fake backend as long as there are no real ones
+  # this way HAProxy will not fail on a config check
+  balance <%= node[:haproxy][:balance] %>
+  server localhost 127.0.0.1:8080 weight 1 maxconn 5 check
+<% end %>
 
-    default_backend najem
+    default_backend <%= node[:haproxy][:default_backend] %>
 
-backend najem
-    server najem-web-1 172.31.41.133:80 check inter 5000 fastinter 1000 fall 1 weight 1
+<% if !node[:haproxy][:backends].blank? %>
 
-backend api
-    server api-web-1 172.31.41.133:80 check inter 5000 fastinter 1000 fall 1 weight 1
+<% node[:haproxy][:backends].each do |backend| %>
+backend <%= backend['title'] %>
+    <% backend['servers'].each do |server| %>
+    <%= server %>
+    <% end %>
+<% end %>
+
+<% end %>
