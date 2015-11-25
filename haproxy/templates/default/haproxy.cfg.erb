@@ -45,6 +45,7 @@ defaults
 frontend <%= frontend['title'] %> <%= frontend['address'] %>
     <% frontend['acls'].each do |acl| %>
     acl <%= acl %>
+
     <% end %>
 
     <% frontend['use_backends'].each do |backend| %>
@@ -68,6 +69,7 @@ backend <%= backend['title'] %>
     <% backend['servers'].each do |server| %>
     <%= server %>
     <% end %>
+
 <% end %>
 
 <% end %>
