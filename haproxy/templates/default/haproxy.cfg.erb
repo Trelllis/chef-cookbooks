@@ -33,7 +33,7 @@ defaults
     option          http-server-close                                 # enable HTTP connection closing on the server side
     <% end %>
     option          abortonclose                                      # enable early dropping of aborted requests from pending queue
-    option          httpchk                                           # enable HTTP protocol to check on servers health
+    option          httpchk GET <%= node[:haproxy][:health_check_url] %> # Nginx doesn't understand OPTIONS
     <% if node[:haproxy][:enable_stats] -%>
     stats auth <%= node[:haproxy][:stats_user] %>:<%= node[:haproxy][:stats_password] %>
     stats uri <%= node[:haproxy][:stats_url] %>
