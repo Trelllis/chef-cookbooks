@@ -1,4 +1,4 @@
-template '/home/ec2-user/code/docker-composer.yml' do
+template '/home/ec2-user/code/docker-compose.yml' do
     source 'trellis-compose.yml.erb'
 end
 
