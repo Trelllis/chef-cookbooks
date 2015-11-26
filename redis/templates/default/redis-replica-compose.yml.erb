@@ -2,14 +2,15 @@ redis-<%= @store[:title] %>-replica:
     image: trelllis/redis:replica
     container_name: redis-<%= @store[:title] %>-replica
     expose:
-        - 6379
+        - "6379"
         <% if @store[:port] != '6379' %>
-        - <%= @store[:port] %>
+        - "<%= @store[:port] %>"
         <% end %>
     ports:
-        - <%= @store[:port] %>:6379
+        - "<%= @store[:port] %>:6379"
     links:
         - redis-<%= @store[:title] %>-primary-ambassador:primary
+    command: redis-server /etc/redis.conf slaveof primary <%= @store[:port] %>
 
 redis-<%= @store[:title] %>-primary-ambassador:
     image: svendowideit/ambassador
@@ -20,6 +21,6 @@ redis-<%= @store[:title] %>-primary-ambassador:
         - <%= @store[:port] %>
         <% end %>
     environment:
-        PRIMARY_PORT_6379_TCP: tcp://<%= @store[:ip] %>:<%= @store[:port] %>
+        PRIMARY_PORT_<%= @store[:port] %>_TCP: tcp://<%= @store[:ip] %>:<%= @store[:port] %>
 
 
