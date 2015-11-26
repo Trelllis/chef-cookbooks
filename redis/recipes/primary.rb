@@ -1,10 +1,10 @@
-include_recipe 'docker-compose'
+include_recipe 'fig'
 
 node['redis']['stores'].each do |store|
     # create data directories
 
     # run primary stores
-    docker-compose 'redis-primary-instance' do
+    fig 'redis-primary-instance' do
         action :up
         source 'redis-primary-compose.yml.erb'
     end
