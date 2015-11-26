@@ -5,6 +5,8 @@
         - /home/ec2-user/redis/<%= @store[:title] %>:/data
     expose:
         - 6379
+        <% if @store[:port] != 6379 %>
         - <%= @store[:port] %>
+        <% end %>
     ports:
         - <%= @store[:port] %>:6379

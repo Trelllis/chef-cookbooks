@@ -3,7 +3,9 @@ redis-<%= @store[:title] %>-replica:
     container_name: redis-<%= @store[:title] %>-replica
     expose:
         - 6379
+        <% if @store[:port] != 6379 %>
         - <%= @store[:port] %>
+        <% end %>
     ports:
         - <%= @store[:port] %>:6379
     links:
