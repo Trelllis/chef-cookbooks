@@ -1,5 +1,6 @@
-redis-<%= @store[:title] %>-primary:
+<%= @store[:title] %>-primary:
     image: trelllis/redis:primary
+    container_name: redis-<%= @store[:title] %>-primary
     volumes:
         - /home/ec2-user/redis/<%= @store[:title] %>:/data
     expose:
