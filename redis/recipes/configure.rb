@@ -22,3 +22,7 @@ end
 sysctl_param 'vm.overcommit_memory' do
     value 1
 end
+
+sysctl_param 'net.ipv4.ip_forward' do
+    value 1
+end
