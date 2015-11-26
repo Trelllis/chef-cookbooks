@@ -1,5 +1,10 @@
+directory "/home/ec2-user/redis"
+
 node['redis']['stores'].each do |store|
-    # create data directorie
+    # create directorie
+    directory "/home/ec2-user/redis/#{store[:title]}"
+
+    # compile template into docker-compose file
     template '/home/ec2-user/redis/docker-compose.yml' do
         source 'redis-primary-compose.yml.erb'
         variables store
