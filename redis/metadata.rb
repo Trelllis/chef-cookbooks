@@ -4,7 +4,6 @@ maintainer "Vinelab"
 license "MIT"
 version "1.0.0"
 
-depends "fig"
 depends "sysctl"
 
 recipe "redis::configure", "Configure the server to host a production-ready Redis instance."
