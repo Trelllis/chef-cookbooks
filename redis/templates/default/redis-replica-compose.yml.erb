@@ -22,5 +22,3 @@ redis-<%= @store[:title] %>-primary-ambassador:
         <% end %>
     environment:
         PRIMARY_PORT_<%= @store[:port] %>_TCP: tcp://<%= @store[:ip] %>:<%= @store[:port] %>
-
-
