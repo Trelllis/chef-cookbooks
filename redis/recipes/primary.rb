@@ -7,7 +7,7 @@ node['redis']['stores'].each do |store|
     # compile template into docker-compose file
     template '/home/ec2-user/redis/docker-compose.yml' do
         source 'redis-primary-compose.yml.erb'
-        variables store
+        variables :store => store
     end
 
     # run primary instances
