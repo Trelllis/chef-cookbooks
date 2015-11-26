@@ -1,4 +1,9 @@
+package "docker"
 include_recipe 'sysctl::default'
+
+service "docker" do
+    action :start
+end
 
 sysctl_param 'vm.swappiness' do
     value 0
