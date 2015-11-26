@@ -20,7 +20,12 @@ php:
         - code
     expose:
         - "9000"
-    external_hosts:
+    external_links:
+        - redis-data:redis-data
+        - redis-media:redis-media
+        - redis-cache:redis-cache
+        - neo4j-db:neo4j-db
+    extra_hosts:
         - redis-data:10.0.3.60
         - redis-media:10.0.3.60
         - redis-cache:10.0.3.60
