@@ -1,4 +1,4 @@
-for node['redis']['stores'] do |store|
+node['redis']['stores'].each do |store|
     # create data directories
 
     # run primary stores
