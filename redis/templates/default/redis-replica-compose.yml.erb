@@ -1,4 +1,4 @@
-<%= @store[:title] %>-replica:
+redis-<%= @store[:title] %>-replica:
     image: trelllis/redis:replica
     container_name: redis-<%= @store[:title] %>-replica
     expose:
@@ -8,7 +8,7 @@
     links:
         - redis-<%= @store[:title] %>-primary-ambassador:primary
 
-<%= @store[:title] %>-primary-ambassador:
+redis-<%= @store[:title] %>-primary-ambassador:
     image: svendowideit/ambassador
     container_name: redis-<%= @store[:title] %>-primary-ambassador
     expose:
