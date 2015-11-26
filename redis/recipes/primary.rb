@@ -1,3 +1,5 @@
+include_recipe 'docker-compose'
+
 node['redis']['stores'].each do |store|
     # create data directories
 
