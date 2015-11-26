@@ -13,7 +13,7 @@
     container_name: redis-<%= @store[:title] %>-primary-ambassador
     expose:
         - 6379
-    env:
-        - PRIMARY_PORT_6379_TCP=tcp://<%= @store[:ip] %>:<%= @store[:port] %>
+    environment:
+        PRIMARY_PORT_6379_TCP: tcp://<%= @store[:ip] %>:<%= @store[:port] %>
 
 
