@@ -16,6 +16,9 @@ redis-<%= @store[:title] %>-primary-ambassador:
     container_name: redis-<%= @store[:title] %>-primary-ambassador
     expose:
         - 6379
+        <% if @store[:port] != '6379' %>
+        - <%= @store[:port] %>
+        <% end %>
     environment:
         PRIMARY_PORT_6379_TCP: tcp://<%= @store[:ip] %>:<%= @store[:port] %>
 
