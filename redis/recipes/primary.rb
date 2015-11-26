@@ -1,5 +1,3 @@
-include_recipe 'fig'
-
 node['redis']['stores'].each do |store|
     # create data directorie
     template '/home/ec2-user/redis/docker-compose.yml' do
