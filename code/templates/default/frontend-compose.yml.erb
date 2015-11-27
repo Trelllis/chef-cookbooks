@@ -1,7 +1,7 @@
 frontend:
     image: trelllis/frontend
     volumes:
-        - /home/ec2-user/code/trellis_frontend:/code:rw
+        - <%= @code_path %>:/code:rw
     working_dir: /code
     environment:
         NODE_ENV: <%= node[:cluster_env] %>

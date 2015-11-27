@@ -15,6 +15,10 @@ node[:deploy].each do |application, deploy|
        # it's a NodeJS/Frontend project
        template "#{deploy[:deploy_to]}/docker-compose.yml" do
             source 'frontend-compose.yml.erb'
+
+            variables(
+                code_path: deploy[:deploy_to],
+            )
         end
 
         script 'build-frontend' do
