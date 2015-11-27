@@ -13,8 +13,16 @@ node[:deploy].each do |application, deploy|
 
     elsif File.exists?("#{deploy[:deploy_to]}/package.json")
        # it's a NodeJS/Frontend project
-       # template "#{deploy[:deploy_to]}/docker-compose.yml" do
-       #      source 'frontend-compose.yml.erb'
-       # end
+       template "#{deploy[:deploy_to]}/docker-compose.yml" do
+            source 'frontend-compose.yml.erb'
+        end
+
+        script 'build-frontend' do
+            interpreter 'bash'
+            cwd deploy[:deploy_to]
+            code <<-EOH
+                docker-compose run --rm
+            EOH
+        end
     end
 end

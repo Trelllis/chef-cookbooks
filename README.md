@@ -9,20 +9,23 @@ Manage code deployment and dependencies.
 **Recipes**
 
 - `code::setup` Install dependencies (composer)
+- `code::build` Build the project, for backend it installs dependencies (composer), for frotnend it builds it
 - `code::deploy` Deploy a version of the code
 - `code::mount` A workaround for Docker to mount OpsWorks deploy directory `/srv/www` for it being a symlink directory
 - `code::install_dependencies` Run composer install inside the project directory
 - `code::permissions` Fix permissions for your project. i.e. for Laravel projects the `storage/` directory's mode must be 0755
+- `code::env` Prepare the environment variables read from OpsWorks (or any passed in variables) and put them in .env
 
-Add the following to the *Deploy* lifecycle for a full revision deployment process:
+Add the following to the corresponding lifecycles events for a full revision deployment process:
 
 **Setup**
 - `code::setup`
 
 **Deploy**
 - `code::deploy`
-- `code::install_dependencies`
+- `code::build`
 - `code::permissions`
+- `code::env`
 
 > IMPORTANT!
 In the case of Laravel, add `code::env` to the end of the deploy lifecycle to have

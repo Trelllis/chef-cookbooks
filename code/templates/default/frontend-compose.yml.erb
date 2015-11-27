@@ -1,0 +1,8 @@
+frontend:
+    image: trelllis/frontend
+    volumes:
+        - /home/ec2-user/code/trellis_frontend:/code:rw
+    working_dir: /code
+    environment:
+        NODE_ENV: <%= node[:cluster_env] %>
+    command: bash -c "npm install && bower install --allow-root && gulp build"
