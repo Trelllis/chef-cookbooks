@@ -1,0 +1,27 @@
+code:
+    image: centos:7
+    container_name: code
+    volumes:
+        - /home/ec2-user/code:/code
+    command: /bin/sh -c "while true; do echo hello world > /dev/null; sleep 1; done"
+web:
+    image: trelllis/nginx:najem
+    container_name: web
+    volumes_from:
+        - code
+    ports:
+        - "80:80"
+    links:
+        - php
+php:
+    image: vinelab/php-fpm
+    container_name: php
+    volumes_from:
+        - code
+    expose:
+        - "9000"
+    extra_hosts:
+        - "redis-data:10.0.3.60"
+        - "redis-media:10.0.3.60"
+        - "redis-cache:10.0.3.60"
+        - "neo4j-db:10.0.6.43"
