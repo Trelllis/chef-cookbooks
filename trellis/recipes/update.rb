@@ -9,7 +9,7 @@ script 'trellis' do
     code <<-EOH
         docker-compose pull
         docker-compose stop
-        docker-compose rm
+        docker-compose rm --force
         docker-compose up -d --no-recreate
     EOH
 end
