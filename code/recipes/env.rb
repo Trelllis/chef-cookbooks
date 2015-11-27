@@ -1,5 +1,5 @@
 node[:deploy].each do |application, deploy|
-    if File.exists?("#{deploy[:deploy_to]}/.env")
+    if File.exists?("#{deploy[:deploy_to]}/.env.example")
         template "#{deploy[:deploy_to]}/.env" do
             source ".env.erb"
             mode 0444
