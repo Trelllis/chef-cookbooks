@@ -21,7 +21,7 @@ node[:deploy].each do |application, deploy|
             interpreter 'bash'
             cwd deploy[:deploy_to]
             code <<-EOH
-                docker-compose run --rm
+                docker-compose run --rm frontend
             EOH
         end
     end
