@@ -18,6 +18,7 @@ node[:deploy].each do |application, deploy|
 
             variables(
                 code_path: deploy[:deploy_to],
+                env: deploy[:environment_variables]['NODE_ENV'],
             )
         end
 

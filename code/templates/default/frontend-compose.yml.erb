@@ -4,5 +4,5 @@ frontend:
         - <%= @code_path %>:/code:rw
     working_dir: /code
     environment:
-        NODE_ENV: <%= node[:cluster_env] %>
+        NODE_ENV: <%= @env %>
     command: bash -c "npm install && bower install --allow-root && gulp build"
