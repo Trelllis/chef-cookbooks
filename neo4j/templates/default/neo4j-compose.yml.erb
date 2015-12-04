@@ -4,7 +4,7 @@ neo4j:
     ports:
         - "7474:7474"
     volumes:
-        - "<%= ENV['HOME'] %>/neo4j/data:/data"
+        - /home/ec2-user/neo4j/data:/data
     ulimits:
         nofile:
             soft: 40000

@@ -5,7 +5,6 @@ license     "MIT"
 version     "1.0.0"
 
 depends "deploy"
-depends "composer"
 depends "opsworks_ecs"
 
 recipe "code::setup", "Setup the server environment"
