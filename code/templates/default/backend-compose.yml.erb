@@ -1,7 +1,8 @@
 backend:
     image: vinelab/php-fpm:composer
+    net: host
     volumes:
         - <%= @code_path %>:/code:rw
         - <%= @auth_path %>:/root/.composer/auth.json
     working_dir: /code
-    command: /usr/local/bin/composer --prefer-dist --no-dev --no-interaction
+    command: /usr/local/bin/composer install --prefer-dist --no-dev --no-interaction
