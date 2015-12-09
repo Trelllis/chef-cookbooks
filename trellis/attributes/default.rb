@@ -1,5 +1,5 @@
-node[:hosts] = {}
-node[:hosts]['redis-data'] = ''
-node[:hosts]['redis-media'] = ''
-node[:hosts]['redis-cache'] = ''
-node[:hosts]['neo4j'] = ''
+default[:hosts] = {}
+default[:hosts]['redis-data'] = ''
+default[:hosts]['redis-media'] = ''
+default[:hosts]['redis-cache'] = ''
+default[:hosts]['neo4j'] = ''
