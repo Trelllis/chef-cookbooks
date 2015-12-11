@@ -1,11 +1,11 @@
-template '/home/ec2-user/code/docker-compose.yml' do
-    source 'trellis-compose.yml.erb'
+template '/home/ec2-user/code/trellis_backend/docker-compose.yml' do
+    source 'najem-compose.yml.erb'
 end
 
 # run docker compose
-script 'trellis' do
+script 'run-najem' do
     interpreter 'bash'
-    cwd "/home/ec2-user/code"
+    cwd "/home/ec2-user/code/trellis_backend"
     code <<-EOH
         docker-compose pull
         docker-compose stop

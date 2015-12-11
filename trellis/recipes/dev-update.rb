@@ -1,5 +1,5 @@
 template '/home/ec2-user/code/docker-compose.yml' do
-    source 'trellis-compose.yml.erb'
+    source 'trellis-dev-compose.yml.erb'
 end
 
 # run docker compose
