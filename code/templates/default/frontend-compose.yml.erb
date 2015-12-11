@@ -5,4 +5,4 @@ frontend:
     working_dir: /code
     environment:
         NODE_ENV: <%= @env %>
-    command: bash -c "npm install && bower install --allow-root && gulp build"
+    command: bash -c "npm install && bower update --allow-root && gulp build"
