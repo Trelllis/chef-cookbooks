@@ -3,6 +3,7 @@ global
     log 127.0.0.1   local1 notice
     #log loghost    local0 info
     maxconn <%= node[:haproxy][:global_max_connections] %>
+    tune.ssl.default-dh-param <%= node[:haproxy][:global_max_connections] %>
     #debug
     #quiet
     user haproxy
@@ -18,6 +19,8 @@ defaults
     mode            http
     option          httplog
     option          dontlognull
+    option          forwardfor
+    option          http-server-close
     retries         <%= node[:haproxy][:retries] %>
     option          redispatch
     maxconn        <%= node[:haproxy][:default_max_connections] %>
