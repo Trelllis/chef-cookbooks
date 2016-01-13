@@ -1,5 +1,8 @@
 template '/home/ec2-user/code/docker-compose.yml' do
     source 'trellis-compose.yml.erb'
+    variables(
+        redis: redis
+    )
 end
 
 # run docker compose
