@@ -1,5 +1,9 @@
 default[:hosts] = {}
-default[:hosts]['redis-data'] = ''
-default[:hosts]['redis-media'] = ''
-default[:hosts]['redis-cache'] = ''
 default[:hosts]['neo4j'] = ''
+default[:hosts]['redis'] = {}
+default[:hosts]['redis']['redis-primary-data'] = ''
+default[:hosts]['redis']['redis-primary-media'] = ''
+default[:hosts]['redis']['redis-primary-cache'] = ''
+default[:hosts]['redis']['redis-replica-media'] = ''
+default[:hosts]['redis']['redis-replica-data'] = ''
+default[:hosts]['redis']['redis-replica-cache'] = ''

@@ -21,9 +21,10 @@ php:
     expose:
         - "9000"
     extra_hosts:
-        - "redis-primary-data:<%= @redis[:primary][:data] %>"
-        - "redis-primary-media:<%= @redis[:primary][:media] %>"
-        - "redis-primary-cache:<%= @redis[:primary][:cache] %>"
-        - "redis-replica-data:<%= @redis[:replica][:data] %>"
-        - "redis-replica-media:<%= @redis[:replica][:media] %>"
-        - "redis-replica-cache:<%= @redis[:replica][:cache] %>"
+        - "redis-primary-data:<%= @hosts['redis']['primary']['data'] %>"
+        - "redis-primary-media:<%= @hosts['redis']['primary']['media'] %>"
+        - "redis-primary-cache:<%= @hosts['redis']['primary']['cache'] %>"
+        - "redis-replica-data:<%= @hosts['redis']['replica']['data'] %>"
+        - "redis-replica-media:<%= @hosts['redis']['replica']['media'] %>"
+        - "redis-replica-cache:<%= @hosts['redis']['replica']['cache'] %>"
+        - "neo4j-db:<%= @hosts['neo4j'] %>"
