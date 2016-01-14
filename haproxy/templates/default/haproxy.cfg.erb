@@ -45,7 +45,11 @@ defaults
 <% if !node[:haproxy][:frontends].blank? %>
 
 <% node[:haproxy][:frontends].each do |frontend| %>
-frontend <%= frontend['title'] %> <%= frontend['address'] %>
+frontend <%= frontend['title'] %>
+    bind *:80
+    bind *:443 ssl crt /etc/ssl/najem.com/najem.com.pem crt /etc/ssl/trellis.tv/trellis.tv.pem
+    redirect scheme https code 301 if !{ ssl_fc }
+
     <% frontend['acls'].each do |acl| %>
     acl <%= acl %>
 
