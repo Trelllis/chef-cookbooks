@@ -16,6 +16,8 @@ web:
 php:
     image: vinelab/php-fpm
     container_name: php
+    links:
+        -syndication
     volumes_from:
         - code
     expose:
@@ -25,3 +27,8 @@ php:
         - "redis-media:<%= node[:hosts]['redis-media'] %>"
         - "redis-cache:<%= node[:hosts]['redis-cache'] %>"
         - "neo4j-db:<%= node[:hosts]['neo4j'] %>"
+syndication:
+    image: trelllis/syndication-service
+    container_name: syndication
+    expose:
+        - "5000"

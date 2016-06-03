@@ -18,6 +18,8 @@ php:
     container_name: php
     volumes_from:
         - code
+    links:
+        -syndication
     expose:
         - "9000"
     extra_hosts:
@@ -28,3 +30,8 @@ php:
         - "redis-replica-media:<%= @hosts['redis']['replica']['media'] %>"
         - "redis-replica-cache:<%= @hosts['redis']['replica']['cache'] %>"
         - "neo4j-db:<%= @hosts['neo4j'] %>"
+syndication:
+    image: trelllis/syndication-service
+    container_name: syndication
+    expose:
+        - "5000"
