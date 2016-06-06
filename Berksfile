@@ -1,7 +1,7 @@
 source "https://supermarket.chef.io"
 
-cookbook 'apt', '= 3.0.0'
+cookbook 'ohai', '= 3.0.1'
 
-depends 'ohai', '= 3.0.1'
+cookbook 'apt', '= 3.0.0'
 
 cookbook 'sysctl', '~> 0.6.2'
