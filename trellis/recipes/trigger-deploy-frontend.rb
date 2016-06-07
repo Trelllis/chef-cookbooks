@@ -1,6 +1,6 @@
 log 'message' do
     message 'app-id #{node[:instance]["backend_app_id"]'
-    level :debug
+    level :info
 end
 #bash 'Deploy-App' do
 #    code <<-EOH
