@@ -1,6 +1,3 @@
-#Chef::Log.info("app-id [#{node[:instance]['backend_app_id']}]")
-#Chef::Log.info("stack-id [#{node[:instance]['stack_id']}]")
-#Chef::Log.info("app-id [#{node[:instance]['id']}]")
 script 'Deploy-App' do
     interpreter 'bash'
     code <<-EOH
