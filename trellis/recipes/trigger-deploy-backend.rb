@@ -1,7 +1,9 @@
- bash 'Deploy-App' do
-        code <<-EOH
-            aws opsworks --region us-east-1 create-deployment --instance-ids "#{node[:opsworks][:instance][:id]}" --stack-id #{node[:opsworks][:stack][:id]} --app-id 77357f70-5f0f-4737-9df0-1d51857f5d98 --command "{"Name":"deploy"}"
-        EOH
+#Trigger Backend Deployement
 
-    end
+script 'Deploy-App' do
+    interpreter 'bash'
+    code <<-EOH
+aws opsworks --region us-east-1 create-deployment --instance-ids \"#{node[:instance]['id']}\" --stack-id #{node[:instance]['stack_id']} --app-id #{node[:instance]['backend_app_id']} --command #{command}
+EOH
 
+end
