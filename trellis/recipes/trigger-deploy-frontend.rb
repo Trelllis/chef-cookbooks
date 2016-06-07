@@ -1,5 +1,5 @@
 log 'message' do
-    message 'app-id #{node[:instance]['backend_app_id']}'
+    message 'app-id #{node[:instance]["backend_app_id"]}'
     level :info
 end
 #bash 'Deploy-App' do
