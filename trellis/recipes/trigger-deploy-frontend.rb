@@ -6,4 +6,4 @@ bash 'Deploy-App' do
         aws opsworks --region us-east-1 create-deployment --instance-ids %Q[#{node[:instance]['stack_id']}]%Q --stack-id [#{node[:instance]['stack_id']}] --app-id [#{node[:instance]['stack_id']}]
 EOH
 
-#end
+end
