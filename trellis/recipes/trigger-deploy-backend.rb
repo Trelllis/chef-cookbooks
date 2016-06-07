@@ -1,5 +1,7 @@
 #Trigger Backend Deployement
 
+command = '"{\"Name\":\"deploy\"}"'
+
 script 'Deploy-App' do
     interpreter 'bash'
     code <<-EOH
