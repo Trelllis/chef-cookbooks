@@ -1,7 +1,3 @@
-log 'message' do
-    message 'app-id [#{node[:instance]['backend_app_id']}]'
-    level :info
-end
 Chef::Log.info("app-id [#{node[:instance]['backend_app_id']}]")
 #bash 'Deploy-App' do
 #    code <<-EOH
