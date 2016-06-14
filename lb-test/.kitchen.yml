@@ -1,0 +1,75 @@
+---
+<% if fog_file = File.expand_path('~/.fog') and File.exists?(fog_file)
+  fog_file = YAML.load_file(fog_file)
+  ENV['AWS_ACCESS_KEY_ID'] ||= fog_file.fetch('travis-ci', {})['aws_access_key_id']
+  ENV['AWS_SECRET_ACCESS_KEY'] ||= fog_file.fetch('travis-ci', {})['aws_secret_access_key']
+  ENV['AWS_KEYPAIR_NAME'] ||= fog_file.fetch('travis-ci', {})['aws_keypair_name']
+  ENV['EC2_SSH_KEY_PATH'] ||= File.expand_path('~/.ssh/id_rsa_kitchen_ec2')
+end %>
+driver:
+  aws_access_key_id: <%= ENV['AWS_ACCESS_KEY_ID'] %>
+  aws_secret_access_key: <%= ENV['AWS_SECRET_ACCESS_KEY'] %>
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  require_chef_omnibus: "11.10.4"
+provisioner:
+  name: chef_solo
+  attributes:
+    test_kitchen: true
+    haproxy:
+      custom_config:
+        global:
+          description: Global tacos.
+        defaults:
+          http-check: disable-on-404
+        backend:
+          reqadd: X-Backend:1
+        backend_ssl:
+          reqadd: X-Backend-SSL:1
+        frontend:
+          reqadd: X-Frontend:1
+        frontend_ssl:
+          reqadd: X-Frontend-SSL:1
+    opsworks:
+      layers:
+        utility:
+          name: "Utility"
+          instances:
+            util-01:
+              private_ip: "127.0.0.0"
+              instance_type: "t2.small"
+        rails-app:
+          name: "Rails App"
+          instances:
+            app-01:
+              private_ip: "127.0.0.1"
+              instance_type: "c3.8xlarge"
+              elastic_ip: "127.0.0.1"
+            app-02:
+              private_ip: "127.0.0.2"
+              instance_type: "c3.8xlarge"
+              elastic_ip: null
+            app-03:
+              private_ip: "127.0.0.3"
+              instance_type: "t2.small"
+              elastic_ip: null
+
+platforms:
+  - name: amazon-2014.09
+    driver_plugin: ec2
+    driver_config:
+      ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+      username: ec2-user
+      flavor_id: c3.large
+      image_id: ami-0268d56a
+      region: us-east-1
+      availability_zone: us-east-1b
+      security_group_ids: ['ci-testing']
+      interface: public
+      tags:
+        Name: <%= "#{ENV['CI'] ? 'travis-ci' : ENV['USER']}-opsworks-haproxy-kitchen" %>
+        Env: public
+suites:
+  - name: default
+    run_list:
+      - recipe[haproxy::default]
+    attributes:
