@@ -2,6 +2,6 @@
 
 http_request '' do
     
-    url "http://#{node[:haproxy]['stage_ip']}:8001/api/reload"
+    url "http://#{node[:haproxyserv]['stage_ip']}:8001/api/reload"
 
 end
