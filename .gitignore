@@ -2,3 +2,5 @@
 Berksfile.lock
 id_rsa
 id_rsa.pub
+
+custom-json.json
