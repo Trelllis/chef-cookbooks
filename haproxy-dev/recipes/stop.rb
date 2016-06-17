@@ -1,1 +1,1 @@
-include_recipe 'haproxy::stop'
+include_recipe 'haproxy-dev::stop'

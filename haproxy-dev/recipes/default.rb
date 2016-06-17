@@ -2,10 +2,10 @@ package 'haproxy' do
   action :install
 end
 
-include_recipe 'haproxy::service'
+include_recipe 'haproxy-dev::service'
 
 service 'haproxy' do
   action [:enable, :start]
 end
 
-include_recipe 'haproxy::configure'
+include_recipe 'haproxy-dev::configure'
