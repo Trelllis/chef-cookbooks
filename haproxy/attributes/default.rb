@@ -1,8 +1,9 @@
 default[:instance] = {}
 default[:instance]['instance_id'] = node['opsworks']['instance']['aws_instance_id']
 default[:instance]['private_ip'] = node['opsworks']['instance']['private_ip']
-default[:haproxy]['private_ip'] = node['haproxy_ip']
-default[:haproxy]['backend'] = node['backend']
+default[:haproxyapi] = {}
+default[:haproxyapi]['private_ip'] = node['haproxy_ip']
+default[:haproxyapi]['backend'] = node['backend']
 default[:instance]['id'] = node["opsworks"]["instance"]["id"]
 default[:instance]['stack_id'] = node["opsworks"]["stack"]["id"]
 default[:instance]['backend_app_id_stage'] = '77357f70-5f0f-4737-9df0-1d51857f5d98'
