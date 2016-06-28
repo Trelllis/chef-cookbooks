@@ -24,6 +24,7 @@ default[:haproxyapi]['backend'] = node['backend']
 
 #haproxy opsworks related attributes
 default[:instance]['id'] = node["opsworks"]["instance"]["id"]
+default[:instance]['instance_type'] = node["opsworks"]["instance"]["instance_type"]
 default[:instance]['stack_id'] = node["opsworks"]["stack"]["id"]
 default[:instance]['backend_app_id_stage'] = '77357f70-5f0f-4737-9df0-1d51857f5d98'
 default[:instance]['frontend_app_id_stage'] = '8aac1be5-0d09-40f9-90e3-10fdcfba1a43'
