@@ -11,5 +11,5 @@ default[:hosts]['redis']['redis-replica-cache'] = ''
 default[:instance] = {}
 default[:instance]['id'] = node["opsworks"]["instance"]["id"]
 default[:instance]['stack_id'] = node["opsworks"]["stack"]["id"]
-default[:instance]['backend_app_id'] = node["opsworks"]["backend_app_id"]
-default[:instance]['frontend_app_id'] =node["opsworks"]["frontend_app_id"]
+default[:instance]['backend_app_id'] = node["backend_app_id"]
+default[:instance]['frontend_app_id'] =node["frontend_app_id"]
