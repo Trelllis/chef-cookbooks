@@ -1,5 +1,4 @@
 include_recipe 'deploy'
-include 
 node[:deploy].each do |application, deploy|
     directory deploy[:deploy_to] do
         owner deploy[:user]
