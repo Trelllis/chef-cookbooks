@@ -1,4 +1,6 @@
 include_recipe 'deploy'
+include_recipe 'aws'
+
 node[:deploy].each do |application, deploy|
     directory deploy[:deploy_to] do
         owner deploy[:user]
