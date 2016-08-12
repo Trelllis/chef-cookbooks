@@ -40,6 +40,9 @@ node[:deploy].each do |application, deploy|
     s3bucket = app[0][:environment][:BUCKET]
     s3filename = app[0][:environment][:FILENAME]
 
+    puts s3region
+    puts s3filename
+    
     #3
     s3_client = Aws::S3::Client.new(region: s3region)
     s3_client.get_object(bucket: s3bucket,
