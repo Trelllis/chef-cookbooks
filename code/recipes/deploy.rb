@@ -1,5 +1,5 @@
 include_recipe 'deploy'
-
+include 
 node[:deploy].each do |application, deploy|
     directory deploy[:deploy_to] do
         owner deploy[:user]
@@ -33,20 +33,10 @@ node[:deploy].each do |application, deploy|
 #        ssh_wrapper "/tmp/git_wrapper.sh"
 #        action :sync
 #    end
-    
-    query = Chef::Search::Query.new
-    app = query.search(:aws_opsworks_app, "type:other").first
-    s3region = app[0][:environment][:S3REGION]
-    s3bucket = app[0][:environment][:BUCKET]
-    s3filename = app[0][:environment][:FILENAME]
 
-    puts s3region
-    puts s3filename
-    
-    #3
-    s3_client = Aws::S3::Client.new(region: s3region)
-    s3_client.get_object(bucket: s3bucket,
-                         key: s3filename,
-                         response_target: deploy[:deploy_to])
+    aws_s3_file deploy[:deploy_to] do
+    bucket app[0][:environment][:BUCKET]
+    remote_path app[0][:environment][:FILENAME]
+    end
     
 end
