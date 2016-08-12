@@ -23,14 +23,27 @@ node[:deploy].each do |application, deploy|
         content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
 
-    # Deploy code
-    git "deploy #{application}" do
-        destination deploy[:deploy_to]
-        repository deploy[:scm][:repository]
-        user deploy[:user]
-        group deploy[:group]
-        revision deploy[:scm][:revision]
-        ssh_wrapper "/tmp/git_wrapper.sh"
-        action :sync
-    end
+#    # Deploy code
+#    git "deploy #{application}" do
+#        destination deploy[:deploy_to]
+#        repository deploy[:scm][:repository]
+#        user deploy[:user]
+#        group deploy[:group]
+#        revision deploy[:scm][:revision]
+#        ssh_wrapper "/tmp/git_wrapper.sh"
+#        action :sync
+#    end
+    
+    query = Chef::Search::Query.new
+    app = query.search(:aws_opsworks_app, "type:other").first
+    s3region = app[0][:environment][:S3REGION]
+    s3bucket = app[0][:environment][:BUCKET]
+    s3filename = app[0][:environment][:FILENAME]
+
+    #3
+    s3_client = Aws::S3::Client.new(region: s3region)
+    s3_client.get_object(bucket: s3bucket,
+                         key: s3filename,
+                         response_target: deploy[:deploy_to])
+    
 end

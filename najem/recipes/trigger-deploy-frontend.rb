@@ -9,4 +9,3 @@ aws opsworks --region us-east-1 create-deployment --instance-ids \"#{node[:insta
 EOH
 
 end
-
