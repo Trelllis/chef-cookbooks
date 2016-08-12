@@ -1,5 +1,4 @@
 include_recipe 'deploy'
-include_recipe 'aws'
 
 node[:deploy].each do |application, deploy|
     directory deploy[:deploy_to] do
@@ -34,10 +33,10 @@ node[:deploy].each do |application, deploy|
 #        ssh_wrapper "/tmp/git_wrapper.sh"
 #        action :sync
 #    end
-
-    aws_s3_file deploy[:deploy_to] do
-    bucket app[0][:environment][:BUCKET]
-    remote_path app[0][:environment][:FILENAME]
-    end
+#
+#    aws_s3_file deploy[:deploy_to] do
+#    bucket app[0][:environment][:BUCKET]
+#    remote_path app[0][:environment][:FILENAME]
+#    end
     
 end
