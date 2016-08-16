@@ -40,23 +40,14 @@ node[:deploy].each do |application, deploy|
 #        action :sync
 #    end
 
-    s3 = AWS::S3.new
-
-    # Set bucket and object name
-    obj = s3.buckets['my-bucket'].objects['my/object.txt']
-
-    # Read content to variable
-    file_content = obj.read
-
-    # Log output (optional)
-    Chef::Log.info(file_content)
-
-    # Write content to file
-    file '/tmp/myobject.txt' do
-      owner 'root'
-      group 'root'
-      mode '0755'
-      content file_content
-      action :create
+    s3_file "/tmp/somefile" do
+        remote_path [:deploy_to]
+        aws_access_key_id deploy["scm"]["user"]
+        aws_secret_access_key deploy["scm"]["password"]
+        s3_url deploy[:scm][:repository]
+        owner deploy[:user]
+        group deploy[:group]
+        action :create
     end
+    
 end
