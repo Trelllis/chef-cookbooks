@@ -1,5 +1,4 @@
 include_recipe 'deploy'
-require 'aws-sdk'
 
 node[:deploy].each do |application, deploy|
     directory deploy[:deploy_to] do
