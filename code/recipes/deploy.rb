@@ -63,7 +63,7 @@ node[:deploy].each do |application, deploy|
         bucket "vinelab-code"
         aws_access_key_id deploy["scm"]["user"]
         aws_secret_access_key deploy["scm"]["password"]
-        s3_url deploy[:scm][:repository]
+#        s3_url deploy[:scm][:repository]
         owner deploy[:user]
         group deploy[:group]
         action :create
