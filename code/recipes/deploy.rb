@@ -22,17 +22,20 @@ node[:deploy].each do |application, deploy|
         mode "0755"
         content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
-
-    s3_file "deploy #{application}" do
-        remote_path "/najem_frontend/stage.zip"
-        bucket "vinelab-code"
-        aws_access_key_id deploy["scm"]["user"]
-        aws_secret_access_key deploy["scm"]["password"]
-        s3_url deploy[:scm][:repository]
-        owner deploy[:user]
-        group deploy[:group]
-        action :create
+    
+    if deploy["scm"]["scm_type"] == 's3'
+        Chef::Log.debug("lol")
     end
+#    s3_file "deploy #{application}" do
+#        remote_path "/najem_frontend/stage.zip"
+#        bucket "vinelab-code"
+#        aws_access_key_id deploy["scm"]["user"]
+#        aws_secret_access_key deploy["scm"]["password"]
+#        s3_url deploy[:scm][:repository]
+#        owner deploy[:user]
+#        group deploy[:group]
+#        action :create
+#    end
     
 #    # Deploy code
 #    git "deploy #{application}" do
