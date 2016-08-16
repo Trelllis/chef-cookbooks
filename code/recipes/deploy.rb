@@ -55,7 +55,7 @@ node[:deploy].each do |application, deploy|
 
         script 'unzip_code' do
             interpreter 'bash'
-            cwd [:deploy_to]
+            cwd deploy[:deploy_to]
             code <<-EOH
             sudo unzip code.zip
 EOH
@@ -64,7 +64,7 @@ EOH
 
         script 'remove_archive' do
             interpreter 'bash'
-            cwd [:deploy_to]
+            cwd deploy[:deploy_to]
             code <<-EOH
             sudo rm code.zip
 EOH
