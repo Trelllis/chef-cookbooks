@@ -1,4 +1,5 @@
 include_recipe 'deploy'
+require 'aws-sdk'
 
 node[:deploy].each do |application, deploy|
     directory deploy[:deploy_to] do
@@ -9,6 +10,11 @@ node[:deploy].each do |application, deploy|
         action :create
     end
 
+    if deploy[:application_type] != 'php'
+        Chef::Log.debug("Skipping deploy::php application #{application} as it is not an PHP app")
+        next
+    end
+    
     # Create id_rsa file - Git SSH Key
     file "/tmp/id_rsa" do
         owner deploy[:user]
@@ -33,10 +39,24 @@ node[:deploy].each do |application, deploy|
 #        ssh_wrapper "/tmp/git_wrapper.sh"
 #        action :sync
 #    end
-#
-#    aws_s3_file deploy[:deploy_to] do
-#    bucket app[0][:environment][:BUCKET]
-#    remote_path app[0][:environment][:FILENAME]
-#    end
-    
+
+    s3 = AWS::S3.new
+
+    # Set bucket and object name
+    obj = s3.buckets['my-bucket'].objects['my/object.txt']
+
+    # Read content to variable
+    file_content = obj.read
+
+    # Log output (optional)
+    Chef::Log.info(file_content)
+
+    # Write content to file
+    file '/tmp/myobject.txt' do
+      owner 'root'
+      group 'root'
+      mode '0755'
+      content file_content
+      action :create
+    end
 end
