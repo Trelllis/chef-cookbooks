@@ -58,7 +58,7 @@ node[:deploy].each do |application, deploy|
 #
 #    end
 
-    s3_bucket, s3_key, base_url = OpsWorks::SCM::S3.parse_uri(scm_options[:repository])
+    s3_bucket, s3_key, base_url = OpsWorks::SCM::S3.parse_uri(deploy[:scm][:repository])
     
     s3_file "#{deploy[:deploy_to]}/stage.zip" do
 #        remote_path "/najem_frontend/stage.zip"
