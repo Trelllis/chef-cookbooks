@@ -22,42 +22,52 @@ node[:deploy].each do |application, deploy|
         mode "0755"
         content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
-    script 'clone_code' do
-        interpreter 'bash'
-        cwd 'deploy #{application}'
-        code <<-EOH
-    aws s3 cp s3://vinelab-code/#{application}/#{node[:deploy]['env']}.zip #{node[:deploy]['env']}.zip
-EOH
-    end
+    
+#    script 'create_dir' do
+#        interpreter 'bash'
+#        cwd [:deploy_to]
+#        code <<-EOH
+#        mkdir -p public
+#EOH
+#
+#    end
+#    
+#    script 'clone_code' do
+#        interpreter 'bash'
+#        cwd [:deploy_to]
+#        code <<-EOH
+#    aws s3 cp s3://vinelab-code/najem_frontend/stage.zip .
+#EOH
+#    end
+#
+#    script 'unzip_code' do
+#        interpreter 'bash'
+#        cwd [:deploy_to]
+#        code <<-EOH
+#        sudo unzip *.zip
+#EOH
+#
+#    end
+#
+#    script 'remove_archive' do
+#        interpreter 'bash'
+#        cwd [:deploy_to]
+#        code <<-EOH
+#        sudo rm *.zip
+#EOH
+#
+#    end
 
-    script 'unzip_code' do
-        interpreter 'bash'
-        cwd 'deploy #{application}'
-        code <<-EOH
-        sudo unzip #{node[:deploy]['NODE_ENV']}.zip
-EOH
-
-    end
-
-    script 'remove_archive' do
-        interpreter 'bash'
-        cwd "/home/ec2-user/code/#{node[:deploy]['layer']}_frontend/public"
-        code <<-EOH
-        sudo rm #{node[:deploy]['NODE_ENV']}.zip
-EOH
-
-    end
-
-#    s3_file "deploy #{application}" do
+    s3_file "deploy #{application}" do
 #        remote_path "/najem_frontend/stage.zip"
 #        bucket "vinelab-code"
-#        aws_access_key_id deploy["scm"]["user"]
-#        aws_secret_access_key deploy["scm"]["password"]
-#        s3_url deploy[:scm][:repository]
-#        owner deploy[:user]
-#        group deploy[:group]
-#        action :create
-#    end
+        aws_access_key_id deploy["scm"]["user"]
+        aws_secret_access_key deploy["scm"]["password"]
+        s3_url deploy[:scm][:repository]
+        owner deploy[:user]
+        group deploy[:group]
+        action :create
+    end
     
 #    # Deploy code
 #    git "deploy #{application}" do
