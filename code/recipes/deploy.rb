@@ -58,12 +58,16 @@ node[:deploy].each do |application, deploy|
 #
 #    end
 
+    s3_bucket, s3_key, base_url = OpsWorks::SCM::S3.parse_uri(scm_options[:repository])
+    
     s3_file "#{deploy[:deploy_to]}/stage.zip" do
-        remote_path "/najem_frontend/stage.zip"
-        bucket "vinelab-code"
+#        remote_path "/najem_frontend/stage.zip"
+#        bucket "vinelab-code"
+        bucket s3_bucket
+        remote_path s3_key
         aws_access_key_id deploy["scm"]["user"]
         aws_secret_access_key deploy["scm"]["password"]
-#        s3_url deploy[:scm][:repository]
+        s3_url base_url
         owner deploy[:user]
         group deploy[:group]
         action :create
