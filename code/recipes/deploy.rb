@@ -58,7 +58,7 @@ node[:deploy].each do |application, deploy|
 #
 #    end
 
-    s3_file "#{application}/code.zip" do
+    s3_file "/tmp/somefile.txt" do
 #        remote_path "/najem_frontend/stage.zip"
 #        bucket "vinelab-code"
         aws_access_key_id deploy["scm"]["user"]
