@@ -28,16 +28,16 @@ node[:deploy].each do |application, deploy|
         content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
 
-#    # Deploy code
-#    git "deploy #{application}" do
-#        destination deploy[:deploy_to]
-#        repository deploy[:scm][:repository]
-#        user deploy[:user]
-#        group deploy[:group]
-#        revision deploy[:scm][:revision]
-#        ssh_wrapper "/tmp/git_wrapper.sh"
-#        action :sync
-#    end
+    # Deploy code
+    git "deploy #{application}" do
+        destination deploy[:deploy_to]
+        repository deploy[:scm][:repository]
+        user deploy[:user]
+        group deploy[:group]
+        revision deploy[:scm][:revision]
+        ssh_wrapper "/tmp/git_wrapper.sh"
+        action :sync
+    end
 
 #    s3_file 'deploy #{application}' do
 #        remote_path "/najem_frontend/stage.zip"
