@@ -23,14 +23,25 @@ node[:deploy].each do |application, deploy|
         content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
 
-    # Deploy code
-    git "deploy #{application}" do
-        destination deploy[:deploy_to]
-        repository deploy[:scm][:repository]
-        user deploy[:user]
+    s3_file 'deploy #{application}' do
+        remote_path "/najem_frontend/stage.zip"
+        bucket "vinelab-code"
+        aws_access_key_id deploy["scm"]["user"]
+        aws_secret_access_key deploy["scm"]["password"]
+        s3_url deploy[:scm][:repository]
+        owner deploy[:user]
         group deploy[:group]
-        revision deploy[:scm][:revision]
-        ssh_wrapper "/tmp/git_wrapper.sh"
-        action :sync
+        action :create
     end
+    
+#    # Deploy code
+#    git "deploy #{application}" do
+#        destination deploy[:deploy_to]
+#        repository deploy[:scm][:repository]
+#        user deploy[:user]
+#        group deploy[:group]
+#        revision deploy[:scm][:revision]
+#        ssh_wrapper "/tmp/git_wrapper.sh"
+#        action :sync
+#    end
 end
