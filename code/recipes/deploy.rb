@@ -23,7 +23,7 @@ node[:deploy].each do |application, deploy|
         content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
 
-    s3_file 'deploy #{application}' do
+    s3_file "deploy #{application}" do
         remote_path "/najem_frontend/stage.zip"
         bucket "vinelab-code"
         aws_access_key_id deploy["scm"]["user"]
