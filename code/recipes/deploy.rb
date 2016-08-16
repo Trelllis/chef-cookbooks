@@ -1,6 +1,8 @@
 include_recipe 'deploy'
 
 node[:deploy].each do |application, deploy|
+    
+    # Check directory to deploy
     directory deploy[:deploy_to] do
         owner deploy[:user]
         group deploy[:group]
@@ -9,6 +11,7 @@ node[:deploy].each do |application, deploy|
         action :create
     end
 
+    # App Type git
     if deploy["scm"]["scm_type"] == 'git'
         
         # Create id_rsa file - Git SSH Key
@@ -38,10 +41,13 @@ node[:deploy].each do |application, deploy|
         
     end
     
+    # App Type S3
     if deploy["scm"]["scm_type"] == 's3'
 
+        # Parse S3 Link
         s3_bucket, s3_key, base_url = OpsWorks::SCM::S3.parse_uri(deploy[:scm][:repository])
 
+        # Copy code from s3
         s3_file "#{deploy[:deploy_to]}/code.zip" do
             bucket s3_bucket
             remote_path s3_key
@@ -53,6 +59,7 @@ node[:deploy].each do |application, deploy|
             action :create
         end
 
+        # Unzip code
         script 'unzip_code' do
             interpreter 'bash'
             cwd deploy[:deploy_to]
@@ -62,6 +69,7 @@ EOH
 
         end
 
+        # Remove archive
         script 'remove_archive' do
             interpreter 'bash'
             cwd deploy[:deploy_to]
