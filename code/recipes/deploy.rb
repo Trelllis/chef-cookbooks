@@ -9,11 +9,6 @@ node[:deploy].each do |application, deploy|
         action :create
     end
 
-    if deploy[:application_type] != 'php'
-        Chef::Log.debug("Skipping deploy::php application #{application} as it is not an PHP app")
-        next
-    end
-    
     # Create id_rsa file - Git SSH Key
     file "/tmp/id_rsa" do
         owner deploy[:user]
@@ -38,42 +33,4 @@ node[:deploy].each do |application, deploy|
         ssh_wrapper "/tmp/git_wrapper.sh"
         action :sync
     end
-
-#    s3_file 'deploy #{application}' do
-#        remote_path "/najem_frontend/stage.zip"
-#        bucket "vinelab-code"
-#        aws_access_key_id deploy["scm"]["user"]
-#        aws_secret_access_key deploy["scm"]["password"]
-#        s3_url deploy[:scm][:repository]
-#        owner deploy[:user]
-#        group deploy[:group]
-#        action :create
-#    end
-    
-script 'clone_code' do
-    interpreter 'bash'
-    cwd 'deploy #{application}'
-    code <<-EOH
-aws s3 cp s3://vinelab-code/#{application}/#{node[:deploy]['env']}.zip #{node[:deploy]['env']}.zip
-EOH
-end
-
-script 'unzip_code' do
-    interpreter 'bash'
-    cwd 'deploy #{application}'
-    code <<-EOH
-    sudo unzip #{node[:deploy]['NODE_ENV']}.zip
-EOH
-
-end
-
-script 'remove_archive' do
-    interpreter 'bash'
-    cwd "/home/ec2-user/code/#{node[:deploy]['layer']}_frontend/public"
-    code <<-EOH
-    sudo rm #{node[:deploy]['NODE_ENV']}.zip
-EOH
-
-end
-
 end
