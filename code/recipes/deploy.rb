@@ -22,10 +22,32 @@ node[:deploy].each do |application, deploy|
         mode "0755"
         content "#!/bin/bash\n/usr/bin/env ssh -q -2 -o \"StrictHostKeyChecking=no\" -i \"/tmp/id_rsa\" $1 $2"
     end
-    
-    if deploy["scm"]["scm_type"] == 's3'
-        Chef::Log.debug("lol")
+    script 'clone_code' do
+        interpreter 'bash'
+        cwd 'deploy #{application}'
+        code <<-EOH
+    aws s3 cp s3://vinelab-code/#{application}/#{node[:deploy]['env']}.zip #{node[:deploy]['env']}.zip
+EOH
     end
+
+    script 'unzip_code' do
+        interpreter 'bash'
+        cwd 'deploy #{application}'
+        code <<-EOH
+        sudo unzip #{node[:deploy]['NODE_ENV']}.zip
+EOH
+
+    end
+
+    script 'remove_archive' do
+        interpreter 'bash'
+        cwd "/home/ec2-user/code/#{node[:deploy]['layer']}_frontend/public"
+        code <<-EOH
+        sudo rm #{node[:deploy]['NODE_ENV']}.zip
+EOH
+
+    end
+
 #    s3_file "deploy #{application}" do
 #        remote_path "/najem_frontend/stage.zip"
 #        bucket "vinelab-code"
