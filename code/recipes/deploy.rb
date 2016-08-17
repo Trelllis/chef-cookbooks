@@ -64,7 +64,7 @@ node[:deploy].each do |application, deploy|
             interpreter 'bash'
             cwd deploy[:deploy_to]
             code <<-EOH
-            sudo unzip code.zip
+            sudo unzip -o code.zip
 EOH
 
         end
