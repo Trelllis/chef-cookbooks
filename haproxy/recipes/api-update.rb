@@ -25,14 +25,14 @@ EOH
 
 end
 
-script 'free_port' do
-    interpreter 'bash'
-    cwd "/home/haproxy-config-manager"
-    code <<-EOH
-    sudo fuser -k 8001/tcp
-EOH
-
-end
+#script 'free_port' do
+#    interpreter 'bash'
+#    cwd "/home/haproxy-config-manager"
+#    code <<-EOH
+#    sudo fuser -k 8001/tcp
+#EOH
+#
+#end
 
 script 'launch_deamon' do
     interpreter 'bash'
