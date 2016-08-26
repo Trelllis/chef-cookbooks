@@ -1,10 +1,8 @@
-
 script 'clone_code' do
     interpreter 'bash'
-    cwd "/home"
+    cwd "/home/haproxy-config-manager"
     code <<-EOH
-sudo mkdir haproxy-config-manager && cd haproxy-config-manager && sudo git init && sudo git remote add origin https://github.com/Vinelab/haproxy-config-manager && sudo git pull origin master
-
+    sudo git pull origin master
 EOH
 
 end
@@ -14,6 +12,24 @@ script 'install_requirements' do
     cwd "/home/haproxy-config-manager"
     code <<-EOH
     sudo pip install -r requirements.txt
+EOH
+
+end
+
+script 'kill_uwsgi' do
+    interpreter 'bash'
+    cwd "/home/haproxy-config-manager"
+    code <<-EOH
+    sudo pkill uwsgi
+EOH
+
+end
+
+script 'free_port' do
+    interpreter 'bash'
+    cwd "/home/haproxy-config-manager"
+    code <<-EOH
+    sudo fuser -k 8001/tcp
 EOH
 
 end
